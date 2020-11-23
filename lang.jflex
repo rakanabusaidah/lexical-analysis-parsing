@@ -1,50 +1,58 @@
-
-
+import java.util.*;
+import java.io.*;
 %%
 
-%class langflex
+%class lang
 %standalone
+%line
+%byaccj
+%{
+    private Parser yyparser;
 
-ident = [a-zA-Z][a-zA-Z0-9_]*
-lit = [0-9]+
-newline = \n
-whitespace = [\t ]+
+    public lang(java.io.Reader r, Parser yyparser) {
 
+    this(r);
+    this.yyparser = yyparser;
+}
+
+%}
+
+IDENT = [a-zA-Z][a-zA-Z0-9_]*
+LIT = 0|[1-9][0-9]*
+WHITESPACE = [\n\t ]+
 %%
 
-"def"    {System.out.println("keyword Found:  " + yytext());}
-"if"    {System.out.println("keyword Found:  " + yytext());}
-"then"    {System.out.println("keyword Found:  " + yytext());}
-"else"    {System.out.println("keyword Found:  " + yytext());}
-"while"    {System.out.println("keyword Found:  " + yytext());}
-"do"    {System.out.println("keyword Found : " + yytext());}
-"for"    {System.out.println("keyword Found:  " + yytext());}
+"def"     {return Parser.DEF;}
+"if"      {return Parser.IF;}
+"then"    {return Parser.THEN;}
+"else"    {return Parser.ELSE;}
+"while"   {return Parser.PLUS;}
+"do"      {return Parser.DO;}
+"for"     {return Parser.FOR;}
+"("       {return Parser.LEFT;}
+")"       {return Parser.RIGHT;}
+":"       {return Parser.COLON;}
+","       {return Parser.COMMA;}
+";"       {return Parser.SEMICOLON;}
+"=="      {return Parser.EQUAL;}
+"="       {return Parser.ASSIGHN;}
+"+"       {return Parser.PLUS;}
+ "-"      {return Parser.MINUS;}
+"*"       {return Parser.MULT;}
+"%"       {return Parser.REM;}
+"/"       {return Parser.DIV;}
+"<"       {return Parser.LESS;}
+">"       {return Parser.GREATER;}
+"<="      {return Parser.LESSEQ;}
+">="      {return Parser.GREATEREQ;}
+"!="      {return Parser.NOT;}
 
-"("     {System.out.println("punctuation Found:  " + yytext());}
-")"     {System.out.println("punctuation Found:  " + yytext());}
-":"      {System.out.println("punctuation Found:  " + yytext());}
-","      {System.out.println("punctuation Found:  " + yytext());}
-";"      {System.out.println("punctuation Found:  " + yytext());}
 
-"="      {System.out.println("operator Found:  " + yytext());}
-"+"      {System.out.println("operator Found:  " + yytext());}
-"-"       {System.out.println("operator Found:  " + yytext());}
-"*"       {System.out.println("operator Found:  " + yytext());}
-"%"       {System.out.println("operator Found:  " + yytext());}
-"/"       {System.out.println("operator Found:  " + yytext());}
-"=="      {System.out.println("operator Found:  " + yytext());}
-">"       {System.out.println("operator Found:  " + yytext());}
-"<"       {System.out.println("operator Found:  " + yytext());}
-"<="      {System.out.println("operator Found:  " + yytext());}
-">="      {System.out.println("operator Found:  " + yytext());}
-"!="       {System.out.println("operator Found:  " + yytext());}
 
-{ident}     {System.out.println("identifier Found:  " + yytext());}
+{IDENT}     {yyparser.yylval = new ParserVal(yytext()); return Parser.IDENT;}
 
-{lit}       {System.out.println("Literals Found:  " + yytext());}
+{LIT}       {yyparser.yylval = new ParserVal(yytext());	return Parser.LIT;}
 
-{newline}   {}
-
-{whitespace}   {}
+{WHITESPACE}   {}
 
 .        {System.out.println("UNKONW TOKEN Found:  " + yytext());}

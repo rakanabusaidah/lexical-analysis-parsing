@@ -1,3 +1,5 @@
 *.PNG
 input.txt
-langflex.class
+*.class
+commands.txt
+*.java~
