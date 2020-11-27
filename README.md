@@ -1,5 +1,5 @@
-### Project Title
-Lexical Analysis and Parsing for simple language.
+# Lexical Analysis and Parsing for simple language.
+
 (This is for CSC340 Programming Languages and Compilation Assignment)
 
 ### Description
@@ -18,7 +18,7 @@ OP -> == | > | < | >= | <= | !=|%  (the mod operation)
 
 
 ### Files used
-input.txt (program for computing fibonacci numers)
+input.txt (sample program for computing fibonacci numbers)
 lang.jflex
 lang.java
 Parser.y
